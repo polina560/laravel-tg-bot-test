@@ -38,15 +38,19 @@ class TelegramBot
 
     public static function sendMediaGroup(TelegramMessage $text, string $chat_id, int $price = 0, int $reminder = 0): ServerResponse
     {
+        if(empty($text->text)) $msg = '...';
+        else $msg = $text->text;
+
         if ($images = TelegramImage::where('telegram_message_id', $text->id)
             ->orderBy('serial_number')
             ->get()) {
+
             foreach ($images as $index => $image) {
                 if ($index == 0) {
                     $media_group[] = new InputMediaPhoto(
                         [
                             'media' => public_path('images/').$image->image,
-                            'caption' => sprintf($text->text, $price, $reminder),
+                            'caption' => sprintf($msg, $price, $reminder),
                         ]
                     );
                 } else {
@@ -61,13 +65,16 @@ class TelegramBot
         } else {
             return Request::sendMessage([
                 'chat_id' => $chat_id,
-                'text' => $text->text,
+                'text' => $msg
             ]);
         }
     }
 
-    public static function sendButtons(TelegramMessage $text, string $chat_id): ServerResponse|bool
+    public static function sendButtons(TelegramButton $text, string $chat_id): ServerResponse|bool
     {
+        if(empty($text->btn_text)) $msg = '...';
+        else $msg = $text->btn_text;
+
         if (!empty($buttons = TelegramButton::where('telegram_message_id', $text->id)
             ->orderBy('serial_number')
             ->get())) {
@@ -78,7 +85,7 @@ class TelegramBot
 
             return Request::sendMessage([
                 'chat_id' => $chat_id,
-                'text' => $text->text,
+                'text' => $msg,
                 'reply_markup' => new InlineKeyboard($keyboardButton),
             ]);
         } else {

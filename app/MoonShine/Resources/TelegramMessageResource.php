@@ -32,7 +32,7 @@ class TelegramMessageResource extends ModelResource
             ID::make('id')
                 ->sortable(),
             Text::make('Text', 'text'),
-            //            Text::make('Button Text', 'btn_text'),
+            Text::make('Button Text', 'btn_text'),
             Number::make('SerialNumber', 'serial_number'),
             Text::make('Key', 'key'),
         ];
@@ -45,14 +45,10 @@ class TelegramMessageResource extends ModelResource
                 ID::make('id')
                     ->sortable(),
                 Text::make('Text', 'text'),
-                //                Text::make('Button Text', 'btn_text'),
+                Text::make('Button Text', 'btn_text'),
                 Number::make('SerialNumber', 'serial_number'),
                 Text::make('Key', 'key'),
                 RelationRepeater::make('Images', 'telegramImages', resource: TelegramImageResource::class)
-                    ->creatable(limit: 10)
-                    ->removable()
-                    ->vertical(),
-                RelationRepeater::make('Buttons', 'telegramButtons', resource: TelegramButtonResource::class)
                     ->creatable(limit: 10)
                     ->removable()
                     ->vertical(),
@@ -67,18 +63,13 @@ class TelegramMessageResource extends ModelResource
             ID::make('id')
                 ->sortable(),
             Text::make('Text', 'text'),
-            //            Text::make('Button Text', 'btn_text'),
+            Text::make('Button Text', 'btn_text'),
             Number::make('SerialNumber', 'serial_number'),
             Text::make('Key', 'key'),
             RelationRepeater::make('Images', 'telegramImages', resource: TelegramImageResource::class)
                 ->vertical()
                 ->fields([
                     Image::make('Image', 'image'),
-                ]),
-            RelationRepeater::make('Buttons', 'telegramButtons', resource: TelegramButtonResource::class)
-                ->vertical()
-                ->fields([
-                    Text::make('Name', 'name'),
                 ]),
         ];
     }

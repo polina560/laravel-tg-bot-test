@@ -5,6 +5,7 @@ namespace App\Services\Telegram\Commands;
 use App\Models\DialogState;
 use App\Models\TelegramButton;
 use App\Models\TelegramMessage;
+use App\Services\Telegram\TelegramBot;
 use Longman\TelegramBot\Commands\UserCommand;
 use Longman\TelegramBot\Entities\InlineKeyboard;
 use Longman\TelegramBot\Entities\InlineKeyboardButton;
@@ -30,6 +31,10 @@ class InfoCommand extends UserCommand
 
         DialogState::updateLastMessageTime($user_id, $chat_id);
 
+        if ($result = TelegramBot::isMember($chat_id, $user_id)) {
+            return $result;
+        }
+
         $text = TelegramMessage::where('key', '/getInfo')->first();
         $buttons = TelegramButton::where('telegram_message_id', $text->id)
             ->orderBy('serial_number')
@@ -41,7 +46,7 @@ class InfoCommand extends UserCommand
 
         return Request::sendMessage([
             'chat_id' => $chat_id,
-            'text' => $text->text,
+            'text' => $text->btn_text,
             'reply_markup' => new InlineKeyboard($keyboardButton),
         ]);
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\MoonShine\Layouts;
 
+use App\MoonShine\Resources\DialogStateResource;
 use App\MoonShine\Resources\TelegramButtonResource;
 use App\MoonShine\Resources\TelegramImageResource;
 use App\MoonShine\Resources\TelegramMessageResource;
@@ -16,7 +17,6 @@ use MoonShine\MenuManager\MenuGroup;
 use MoonShine\MenuManager\MenuItem;
 use MoonShine\UI\Components\Layout\Layout;
 use Override;
-use App\MoonShine\Resources\DialogStateResource;
 
 final class MoonShineLayout extends AppLayout
 {
@@ -38,9 +38,9 @@ final class MoonShineLayout extends AppLayout
             MenuGroup::make('Телеграм Бот', [
                 MenuItem::make('Сообщения', TelegramMessageResource::class),
                 //            MenuItem::make('Изображения', TelegramImageResource::class),
-                //            MenuItem::make('Копки', TelegramButtonResource::class),
+                MenuItem::make('Кнопки', TelegramButtonResource::class),
+                MenuItem::make('Диалоги пользователей', DialogStateResource::class),
             ]),
-            MenuItem::make('Диалоги пользователей', DialogStateResource::class),
         ];
     }
 

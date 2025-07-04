@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('telegram_message', function (Blueprint $table) {
-            $table->addColumn('text', 'btn_text')->nullable();
+            $table->addColumn('text', 'btn_text');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('telegram_message', function (Blueprint $table) {
-            $table->dropColumn('btn_text')->nullable();
+            $table->dropColumn('btn_text');
         });
     }
 };

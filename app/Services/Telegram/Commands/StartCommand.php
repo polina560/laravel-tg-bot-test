@@ -3,6 +3,7 @@
 namespace App\Services\Telegram\Commands;
 
 use App\Models\DialogState;
+use App\Models\TelegramButton;
 use App\Models\TelegramMessage;
 use App\Services\Telegram\TelegramBot;
 use Longman\TelegramBot\Commands\UserCommand;
@@ -26,14 +27,14 @@ class StartCommand extends UserCommand
         //  создание новой записи диолга с пользователем
         DialogState::updateLastMessageTime($user_id, $chat_id);
 
-        // отправка начального сообщения с изображениями (если они есть)
         $text = TelegramMessage::where('key', '/start')->first();
 
+        // отправка начального сообщения с изображениями (если они есть)
         TelegramBot::sendMediaGroup($text, $chat_id);
 
-        // отправка сообщения с кнопкой для получения монет
-        $text = TelegramMessage::where('key', '/getMoney')->first();
+        $buttons = TelegramButton::where('callback_data', '/start')->first();
 
+        // отправка сообщения с кнопкой для получения монет
         TelegramBot::sendButtons($text, $chat_id);
 
         return Request::answerCallbackQuery([

@@ -4,6 +4,7 @@ namespace App\Services\Telegram\Commands;
 
 use App\Models\DialogState;
 use App\Models\TelegramMessage;
+use App\Services\Telegram\TelegramBot;
 use Longman\TelegramBot\Commands\UserCommand;
 use Longman\TelegramBot\Exception\TelegramException;
 
@@ -22,6 +23,10 @@ class GenericmessageCommand extends UserCommand
         $user_id = $message->getFrom()->getId();
 
         DialogState::updateLastMessageTime($user_id, $chat_id);
+
+        if ($result = TelegramBot::isMember($chat_id, $user_id)) {
+            return $result;
+        }
 
         $text = TelegramMessage::where('key', '/default')->first();
 

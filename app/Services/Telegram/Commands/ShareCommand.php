@@ -3,6 +3,7 @@
 namespace App\Services\Telegram\Commands;
 
 use App\Models\DialogState;
+use App\Services\Telegram\TelegramBot;
 use Longman\TelegramBot\Commands\UserCommand;
 use Longman\TelegramBot\Entities\InlineKeyboard;
 use Longman\TelegramBot\Exception\TelegramException;
@@ -26,7 +27,10 @@ class ShareCommand extends UserCommand
 
         DialogState::updateLastMessageTime($user_id, $chat_id);
 
-        // TODO: занести значение в БД
+        if ($result = TelegramBot::isMember($chat_id, $user_id)) {
+            return $result;
+        }
+
         return Request::sendMessage([
             'chat_id' => $chat_id,
             'text' => 'Выберите чат, в котором хотите поделиться ботом:',

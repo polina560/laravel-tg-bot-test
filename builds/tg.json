@@ -2,11 +2,11 @@
     "_comment": "php artisan moonshine:build tg.json",
     "resources": [
         {
-            "name": "DialogState",
-            "menuName": "Диалоги пользователей",
-            "table": "dialog_state",
+            "name": "TelegramMessageButton",
+            "menuName": "Сообщения с кнопками",
+            "table": "telegram_message_button",
             "timestamps": true,
-            "withMigration": false,
+            "withMigration": true,
             "withModel": true,
             "withResource": true,
 
@@ -17,66 +17,39 @@
                     "methods": ["sortable"]
                 },
                 {
-                    "column": "chat_id",
-                    "type": "integer",
-                    "nullable": false
-                },
-                {
-                    "column": "user_id",
-                    "type": "integer",
-                    "nullable": false
-                },
-                {
-                    "column": "last_msg_id",
+                    "column": "serial_number",
                     "type": "integer",
                     "nullable": true
                 },
                 {
-                    "column": "last_msg_time",
+                    "column": "name",
+                    "type": "string",
+                    "nullable": true
+                },
+                {
+                    "column": "value",
                     "type": "integer",
                     "nullable": true
                 },
                 {
-                    "column": "quantity_reminder_msg",
-                    "type": "integer",
-                    "nullable": true,
-                    "default": 0
+                    "column": "url",
+                    "type": "string",
+                    "nullable": true
                 },
                 {
-                    "column": "ans_1",
-                    "type": "integer",
-                    "nullable": true,
-                    "default": 0
+                    "column": "callback_data",
+                    "type": "string",
+                    "nullable": true
                 },
                 {
-                    "column": "ans_2",
-                    "nullable": true,
-                    "type": "integer"
-                },
-                {
-                    "column": "ans_3",
-                    "type": "integer",
-                    "nullable": true,
-                    "default": 0
-                },
-                {
-                    "column": "ans_4",
-                    "type": "integer",
-                    "nullable": true,
-                    "default": 0
-                },
-                {
-                    "column": "ans_5",
-                    "type": "integer",
-                    "nullable": true,
-                    "default": 0
-                },
-                {
-                    "column": "remainder",
-                    "type": "integer",
-                    "nullable": true,
-                    "default": 0
+                    "column": "telegram_message_button_id",
+                    "type": "BelongsTo",
+                    "relation": {
+                        "table" : "telegram_message_button"
+                    }
                 }
+
+
             ]
         }
 

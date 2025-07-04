@@ -15,7 +15,7 @@ class TelegramMessage extends Model
         'serial_number',
         'key',
         'text',
-        'btn_text',
+        'btn_text'
     ];
 
     public function telegramImages(): HasMany
@@ -23,8 +23,4 @@ class TelegramMessage extends Model
         return $this->hasMany(TelegramImage::class, 'telegram_message_id', 'id');
     }
 
-    public function telegramButtons(): HasMany
-    {
-        return $this->hasMany(TelegramButton::class, 'telegram_message_id', 'id');
-    }
 }

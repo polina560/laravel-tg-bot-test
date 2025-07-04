@@ -15,10 +15,9 @@ return new class extends Migration
 			$table->id();
 			$table->integer('serial_number')->nullable();
 			$table->string('name')->nullable();
-			$table->foreignIdFor(\App\Models\TelegramMessage::class, 'telegram_message_id')
-				->constrained()
-				->cascadeOnDelete()
-				->cascadeOnUpdate();
+			$table->string('url')->nullable();
+			$table->string('callback_data')->nullable();
+			$table->string('key')->nullable();
 			$table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('telegram_button');
+        Schema::dropIfExists('telegram_message_button');
     }
 };
