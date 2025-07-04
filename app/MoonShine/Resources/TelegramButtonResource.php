@@ -32,6 +32,7 @@ class TelegramButtonResource extends ModelResource
 				->sortable(),
 			Number::make('SerialNumber', 'serial_number'),
 			Text::make('Name', 'name'),
+			Text::make('Key', 'key'),
 			Text::make('CallbackData', 'callback_data'),
 			Text::make('Url', 'url'),
         ];

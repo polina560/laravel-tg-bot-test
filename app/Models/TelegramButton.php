@@ -13,6 +13,7 @@ class TelegramButton extends Model
     protected $fillable = [
 		'serial_number',
 		'name',
+        'key',
 		'callback_data',
 		'url',
     ];

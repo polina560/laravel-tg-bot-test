@@ -39,7 +39,6 @@ class MoonShineServiceProvider extends ServiceProvider
                 TelegramImageResource::class,
                 TelegramButtonResource::class,
                 DialogStateResource::class,
-                TelegramMessageButtonResource::class,
             ])
             ->pages([
                 ...$config->getPages(),
