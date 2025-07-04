@@ -1,0 +1,38 @@
+{
+    "_comment": "php artisan moonshine:build tg.json",
+    "resources": [
+        {
+            "name": "TelegramMessage",
+            "menuName": "Сообщения",
+            "table": "telegram_message",
+            "timestamps": true,
+            "withMigration": true,
+            "withModel": true,
+            "withResource": true,
+
+            "fields": [
+                {
+                    "column": "id",
+                    "type": "id",
+                    "methods": ["sortable"]
+                },
+                {
+                    "column": "serial_number",
+                    "nullable": true,
+                    "type": "integer"
+                },
+                {
+                    "column": "key",
+                    "type": "string",
+                    "nullable": true
+                },
+                {
+                    "column": "text",
+                    "type": "text",
+                    "nullable": true
+                }
+            ]
+        }
+
+    ]
+}
