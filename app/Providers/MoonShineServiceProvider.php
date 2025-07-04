@@ -16,6 +16,7 @@ use MoonShine\Laravel\DependencyInjection\MoonShineConfigurator;
 use App\MoonShine\Resources\TelegramMessageResource;
 use App\MoonShine\Resources\TelegramImageResource;
 use App\MoonShine\Resources\TelegramButtonResource;
+use App\MoonShine\Resources\DialogStateResource;
 
 class MoonShineServiceProvider extends ServiceProvider
 {
@@ -36,6 +37,7 @@ class MoonShineServiceProvider extends ServiceProvider
                 TelegramMessageResource::class,
                 TelegramImageResource::class,
                 TelegramButtonResource::class,
+                DialogStateResource::class,
             ])
             ->pages([
                 ...$config->getPages(),

@@ -2,8 +2,8 @@
 
 namespace App\Services\Telegram\Commands;
 
+use App\Models\DialogState;
 use App\Models\TelegramMessage;
-use Illuminate\Support\Facades\DB;
 use Longman\TelegramBot\Commands\UserCommand;
 use Longman\TelegramBot\Exception\TelegramException;
 
@@ -17,8 +17,14 @@ class GenericmessageCommand extends UserCommand
      */
     public function execute(): \Longman\TelegramBot\Entities\ServerResponse
     {
-        $text = TelegramMessage::where('key', '/default')->first()->text;
+        $message = $this->getMessage();
+        $chat_id = $message->getFrom()->getId();
+        $user_id = $message->getFrom()->getId();
 
-        return $this->replyToChat($text);
+        DialogState::updateLastMessageTime($user_id, $chat_id);
+
+        $text = TelegramMessage::where('key', '/default')->first();
+
+        return $this->replyToChat($text->text);
     }
 }

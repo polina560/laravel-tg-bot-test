@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('telegram_message', function (Blueprint $table) {
-            $table->addColumn('text', 'text');
+        Schema::table('dialog_state', function (Blueprint $table) {
+            $table->addColumn('text', 'user_id')->after('chat_id');
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('telegram_message', function (Blueprint $table) {
-            $table->dropColumn('text', 'text');
+        Schema::table('dialog_state', function (Blueprint $table) {
+            $table->dropColumn('user_id');
         });
     }
 };

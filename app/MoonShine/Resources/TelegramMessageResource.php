@@ -32,6 +32,7 @@ class TelegramMessageResource extends ModelResource
             ID::make('id')
                 ->sortable(),
             Text::make('Text', 'text'),
+            //            Text::make('Button Text', 'btn_text'),
             Number::make('SerialNumber', 'serial_number'),
             Text::make('Key', 'key'),
         ];
@@ -44,6 +45,7 @@ class TelegramMessageResource extends ModelResource
                 ID::make('id')
                     ->sortable(),
                 Text::make('Text', 'text'),
+                //                Text::make('Button Text', 'btn_text'),
                 Number::make('SerialNumber', 'serial_number'),
                 Text::make('Key', 'key'),
                 RelationRepeater::make('Images', 'telegramImages', resource: TelegramImageResource::class)
@@ -59,13 +61,13 @@ class TelegramMessageResource extends ModelResource
         ];
     }
 
-
     public function detailFields(): iterable
     {
         return [
             ID::make('id')
                 ->sortable(),
             Text::make('Text', 'text'),
+            //            Text::make('Button Text', 'btn_text'),
             Number::make('SerialNumber', 'serial_number'),
             Text::make('Key', 'key'),
             RelationRepeater::make('Images', 'telegramImages', resource: TelegramImageResource::class)
@@ -94,6 +96,7 @@ class TelegramMessageResource extends ModelResource
             'serial_number' => ['int', 'nullable'],
             'key' => ['string', 'nullable'],
             'text' => ['string', 'nullable'],
+            'btn_text' => ['string', 'nullable'],
         ];
     }
 }

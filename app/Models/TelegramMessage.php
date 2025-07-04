@@ -15,6 +15,7 @@ class TelegramMessage extends Model
         'serial_number',
         'key',
         'text',
+        'btn_text',
     ];
 
     public function telegramImages(): HasMany

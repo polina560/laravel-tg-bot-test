@@ -14,6 +14,7 @@ class TelegramButton extends Model
     protected $fillable = [
         'serial_number',
         'name',
+        'url',
         'telegram_message_id',
     ];
 

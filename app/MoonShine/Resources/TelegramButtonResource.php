@@ -33,6 +33,7 @@ class TelegramButtonResource extends ModelResource
                 ->sortable(),
             Number::make('SerialNumber', 'serial_number'),
             Text::make('Name', 'name'),
+            Text::make('URL', 'url'),
         ];
     }
 
@@ -64,6 +65,7 @@ class TelegramButtonResource extends ModelResource
         return [
             'serial_number' => ['int', 'nullable'],
             'name' => ['string', 'nullable'],
+            'url' => ['string', 'nullable'],
             'telegram_message_id' => ['int', 'required'],
         ];
     }

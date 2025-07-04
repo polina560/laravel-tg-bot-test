@@ -2,9 +2,11 @@
 
 namespace App\Services\Telegram;
 
+use App\Models\TelegramButton;
 use App\Models\TelegramImage;
 use App\Models\TelegramMessage;
 use Longman\TelegramBot\Entities\InlineKeyboard;
+use Longman\TelegramBot\Entities\InlineKeyboardButton;
 use Longman\TelegramBot\Entities\InputMedia\InputMediaPhoto;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Exception\TelegramException;
@@ -63,6 +65,28 @@ class TelegramBot
             ]);
         }
     }
+
+    public static function sendButtons(TelegramMessage $text, string $chat_id): ServerResponse|bool
+    {
+        if (!empty($buttons = TelegramButton::where('telegram_message_id', $text->id)
+            ->orderBy('serial_number')
+            ->get())) {
+            foreach ($buttons as $button) {
+                $keyboardButton[] = new InlineKeyboardButton(
+                    ['text' => $button->name, 'callback_data' => 'is-member']);
+            }
+
+            return Request::sendMessage([
+                'chat_id' => $chat_id,
+                'text' => $text->text,
+                'reply_markup' => new InlineKeyboard($keyboardButton),
+            ]);
+        } else {
+            return false;
+        }
+    }
+
+
 
     //    static function updateLastMessageTime($user_id, $chat_id): string
     //    {

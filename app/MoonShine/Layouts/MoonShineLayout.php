@@ -16,6 +16,7 @@ use MoonShine\MenuManager\MenuGroup;
 use MoonShine\MenuManager\MenuItem;
 use MoonShine\UI\Components\Layout\Layout;
 use Override;
+use App\MoonShine\Resources\DialogStateResource;
 
 final class MoonShineLayout extends AppLayout
 {
@@ -39,6 +40,7 @@ final class MoonShineLayout extends AppLayout
                 //            MenuItem::make('Изображения', TelegramImageResource::class),
                 //            MenuItem::make('Копки', TelegramButtonResource::class),
             ]),
+            MenuItem::make('Диалоги пользователей', DialogStateResource::class),
         ];
     }
 
