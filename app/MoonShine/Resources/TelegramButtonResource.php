@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\MoonShine\Resources;
 
 use App\Models\TelegramButton;
-
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\UI\Components\Layout\Box;
 use MoonShine\UI\Fields\ID;
@@ -28,13 +27,15 @@ class TelegramButtonResource extends ModelResource
     {
         // TODO correct labels values
         return [
-			ID::make('id')
-				->sortable(),
-			Number::make('SerialNumber', 'serial_number'),
-			Text::make('Name', 'name'),
-			Text::make('Key', 'key'),
-			Text::make('CallbackData', 'callback_data'),
-			Text::make('Url', 'url'),
+            ID::make('id')
+                ->sortable(),
+            Number::make('SerialNumber', 'serial_number'),
+            Text::make('Name', 'name'),
+            Text::make('Text', 'text'),
+            Number::make('Value', 'value'),
+            Text::make('Key', 'key'),
+            Text::make('CallbackData', 'callback_data'),
+            Text::make('Url', 'url'),
         ];
     }
 
@@ -42,15 +43,15 @@ class TelegramButtonResource extends ModelResource
     {
         return [
             Box::make([
-                ...$this->indexFields()
-            ])
+                ...$this->indexFields(),
+            ]),
         ];
     }
 
     public function detailFields(): iterable
     {
         return [
-            ...$this->indexFields()
+            ...$this->indexFields(),
         ];
     }
 
@@ -64,10 +65,11 @@ class TelegramButtonResource extends ModelResource
     {
         // TODO change it to your own rules
         return [
-			'serial_number' => ['int', 'nullable'],
-			'name' => ['string', 'required'],
-			'callback_data' => ['string', 'nullable'],
-			'url' => ['string', 'nullable'],
+            'serial_number' => ['int', 'nullable'],
+            'name' => ['string', 'required'],
+            'text' => ['string', 'required'],
+            'callback_data' => ['string', 'nullable'],
+            'url' => ['string', 'nullable'],
         ];
     }
 }

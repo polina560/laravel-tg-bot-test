@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-
 use App\Services\Telegram\BotService;
 use Illuminate\Console\Command;
 use Longman\TelegramBot\Exception\TelegramException;
@@ -10,7 +9,6 @@ use Longman\TelegramBot\Request;
 
 class TelegramBotCommand extends Command
 {
-
     protected $signature = 'telegram:bot {--webhook}';
     protected $description = 'Run Telegram bot in polling or webhook mode';
 
@@ -34,7 +32,9 @@ class TelegramBotCommand extends Command
             $telegram->setWebhook(config('telegram.webhook.url'));
             $this->info('Webhook mode activated!');
         } else {
-            $telegram->useGetUpdatesWithoutDatabase();
+            $updates = $telegram->useGetUpdatesWithoutDatabase();
+            file_put_contents(public_path('storage').'/updates.txt', print_r($updates, true));
+
             $this->info('Polling mode activated!');
             while (true) {
                 $telegram->handleGetUpdates();

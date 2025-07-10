@@ -7,6 +7,7 @@ use App\Models\TelegramButton;
 use App\Models\TelegramMessage;
 use App\Services\Telegram\TelegramBot;
 use Longman\TelegramBot\Commands\UserCommand;
+use Longman\TelegramBot\Entities\InlineKeyboard;
 use Longman\TelegramBot\Entities\ServerResponse;
 use Longman\TelegramBot\Request;
 
@@ -24,6 +25,7 @@ class StartCommand extends UserCommand
         if ($result = TelegramBot::isMember($chat_id, $user_id)) {
             return $result;
         }
+
         //  создание новой записи диолга с пользователем
         DialogState::updateLastMessageTime($user_id, $chat_id);
 
@@ -32,13 +34,20 @@ class StartCommand extends UserCommand
         // отправка начального сообщения с изображениями (если они есть)
         TelegramBot::sendMediaGroup($text, $chat_id);
 
-        $buttons = TelegramButton::where('callback_data', '/start')->first();
+        $button = TelegramButton::where('key', '/getMoney')->first();
+        //
+        //        // отправка сообщения с кнопкой для получения монет
+        //        TelegramBot::sendButtons($buttons, $chat_id);
 
-        // отправка сообщения с кнопкой для получения монет
-        TelegramBot::sendButtons($text, $chat_id);
+        Request::sendMessage([
+            'chat_id' => $chat_id,
+            'text' => $button->text,
+            'reply_markup' => new InlineKeyboard([
+                ['text' => $button->name, 'callback_data' => 'get-money'],
+            ]),
+        ]);
 
         return Request::answerCallbackQuery([
-            'text' => 'Бот запущен',
             'show_alert' => false,
         ]);
     }

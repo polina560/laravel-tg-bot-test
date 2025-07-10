@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\MoonShine\Resources;
 
 use App\Models\TelegramMessage;
+use MoonShine\Laravel\Fields\Relationships\BelongsToMany;
 use MoonShine\Laravel\Fields\Relationships\RelationRepeater;
 use MoonShine\Laravel\Resources\ModelResource;
 use MoonShine\UI\Components\Layout\Box;
@@ -32,7 +33,6 @@ class TelegramMessageResource extends ModelResource
             ID::make('id')
                 ->sortable(),
             Text::make('Text', 'text'),
-            Text::make('Button Text', 'btn_text'),
             Number::make('SerialNumber', 'serial_number'),
             Text::make('Key', 'key'),
         ];
@@ -45,13 +45,13 @@ class TelegramMessageResource extends ModelResource
                 ID::make('id')
                     ->sortable(),
                 Text::make('Text', 'text'),
-                Text::make('Button Text', 'btn_text'),
                 Number::make('SerialNumber', 'serial_number'),
                 Text::make('Key', 'key'),
                 RelationRepeater::make('Images', 'telegramImages', resource: TelegramImageResource::class)
                     ->creatable(limit: 10)
                     ->removable()
                     ->vertical(),
+
             ]),
 
         ];
@@ -63,7 +63,6 @@ class TelegramMessageResource extends ModelResource
             ID::make('id')
                 ->sortable(),
             Text::make('Text', 'text'),
-            Text::make('Button Text', 'btn_text'),
             Number::make('SerialNumber', 'serial_number'),
             Text::make('Key', 'key'),
             RelationRepeater::make('Images', 'telegramImages', resource: TelegramImageResource::class)
@@ -87,7 +86,7 @@ class TelegramMessageResource extends ModelResource
             'serial_number' => ['int', 'nullable'],
             'key' => ['string', 'nullable'],
             'text' => ['string', 'nullable'],
-            'btn_text' => ['string', 'nullable'],
         ];
     }
+
 }

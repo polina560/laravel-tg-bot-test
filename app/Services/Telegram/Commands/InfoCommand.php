@@ -35,10 +35,8 @@ class InfoCommand extends UserCommand
             return $result;
         }
 
-        $text = TelegramMessage::where('key', '/getInfo')->first();
-        $buttons = TelegramButton::where('telegram_message_id', $text->id)
-            ->orderBy('serial_number')
-            ->get();
+//        $text = TelegramMessage::where('key', '/getInfo')->first();
+        $buttons = TelegramButton::where('key', '/getInfo')->get();
         foreach ($buttons as $button) {
             $keyboardButton[] = new InlineKeyboardButton(
                 ['text' => $button->name, 'url' => $button->url]);
@@ -46,7 +44,7 @@ class InfoCommand extends UserCommand
 
         return Request::sendMessage([
             'chat_id' => $chat_id,
-            'text' => $text->btn_text,
+            'text' => 'Узнать подробнее можно тут:',
             'reply_markup' => new InlineKeyboard($keyboardButton),
         ]);
     }

@@ -2,9 +2,9 @@
 
 namespace App\Services\Telegram;
 
-use App\Models\TelegramButton;
 use App\Models\TelegramImage;
 use App\Models\TelegramMessage;
+use Illuminate\Database\Eloquent\Collection;
 use Longman\TelegramBot\Entities\InlineKeyboard;
 use Longman\TelegramBot\Entities\InlineKeyboardButton;
 use Longman\TelegramBot\Entities\InputMedia\InputMediaPhoto;
@@ -38,13 +38,16 @@ class TelegramBot
 
     public static function sendMediaGroup(TelegramMessage $text, string $chat_id, int $price = 0, int $reminder = 0): ServerResponse
     {
-        if(empty($text->text)) $msg = '...';
-        else $msg = $text->text;
+        if (empty($text->text)) {
+            $msg = '...';
+        } else {
+            $msg = $text->text;
+        }
 
-        if ($images = TelegramImage::where('telegram_message_id', $text->id)
+        $images = TelegramImage::where('telegram_message_id', $text->id)
             ->orderBy('serial_number')
-            ->get()) {
-
+            ->get();
+        if (!$images->isEmpty()) {
             foreach ($images as $index => $image) {
                 if ($index == 0) {
                     $media_group[] = new InputMediaPhoto(
@@ -62,38 +65,28 @@ class TelegramBot
                 'chat_id' => $chat_id,
                 'media' => $media_group,
             ]);
+
         } else {
-            return Request::sendMessage([
-                'chat_id' => $chat_id,
-                'text' => $msg
-            ]);
-        }
-    }
-
-    public static function sendButtons(TelegramButton $text, string $chat_id): ServerResponse|bool
-    {
-        if(empty($text->btn_text)) $msg = '...';
-        else $msg = $text->btn_text;
-
-        if (!empty($buttons = TelegramButton::where('telegram_message_id', $text->id)
-            ->orderBy('serial_number')
-            ->get())) {
-            foreach ($buttons as $button) {
-                $keyboardButton[] = new InlineKeyboardButton(
-                    ['text' => $button->name, 'callback_data' => 'is-member']);
-            }
-
             return Request::sendMessage([
                 'chat_id' => $chat_id,
                 'text' => $msg,
-                'reply_markup' => new InlineKeyboard($keyboardButton),
             ]);
-        } else {
-            return false;
         }
     }
 
+    public static function sendButtons(Collection $buttons, string $chat_id, string $msg): ServerResponse|bool
+    {
+        foreach ($buttons as $button) {
+            $keyboardButton[] = new InlineKeyboardButton(
+                ['text' => $button->name, 'callback_data' => $button->callback_data]);
+        }
 
+        return Request::sendMessage([
+            'chat_id' => $chat_id,
+            'text' => $msg,
+            'reply_markup' => new InlineKeyboard($keyboardButton),
+        ]);
+    }
 
     //    static function updateLastMessageTime($user_id, $chat_id): string
     //    {

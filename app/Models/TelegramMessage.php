@@ -15,12 +15,14 @@ class TelegramMessage extends Model
         'serial_number',
         'key',
         'text',
-        'btn_text'
     ];
 
     public function telegramImages(): HasMany
     {
         return $this->hasMany(TelegramImage::class, 'telegram_message_id', 'id');
     }
+
+
+
 
 }
