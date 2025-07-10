@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('telegram_button', function (Blueprint $table) {
+        Schema::table('telegram_image', function (Blueprint $table) {
             $table->addColumn('integer', 'value');
         });
     }
@@ -21,7 +21,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('telegram_button', function (Blueprint $table) {
+        Schema::table('telegram_image', function (Blueprint $table) {
             $table->dropColumn('value');
         });
     }

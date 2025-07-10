@@ -33,6 +33,7 @@ class TelegramImageResource extends ModelResource
                 ->sortable(),
             Number::make('SerialNumber', 'serial_number'),
             Image::make('Image', 'image'),
+            Number::make('Value', 'value'),
         ];
     }
 

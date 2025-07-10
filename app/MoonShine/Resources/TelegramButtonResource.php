@@ -32,7 +32,6 @@ class TelegramButtonResource extends ModelResource
             Number::make('SerialNumber', 'serial_number'),
             Text::make('Name', 'name'),
             Text::make('Text', 'text'),
-            Number::make('Value', 'value'),
             Text::make('Key', 'key'),
             Text::make('CallbackData', 'callback_data'),
             Text::make('Url', 'url'),

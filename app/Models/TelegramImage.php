@@ -14,6 +14,7 @@ class TelegramImage extends Model
     protected $fillable = [
         'serial_number',
         'image',
+        'value',
         'telegram_message_id',
     ];
 

@@ -14,7 +14,6 @@ class TelegramButton extends Model
         'serial_number',
         'name',
         'text',
-        'value',
         'key',
         'callback_data',
         'url',
