@@ -69,7 +69,7 @@ class TelegramBot
         } else {
             return Request::sendMessage([
                 'chat_id' => $chat_id,
-                'text' => $msg,
+                'text' => sprintf($msg, $price, $reminder),
             ]);
         }
     }
